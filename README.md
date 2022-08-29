@@ -1,5 +1,39 @@
 # Garbage In, Garbage Out
 
+## Introduction
+
+Machine learning models can seem inherently trustworthy and impartial compared to human decision-makers, but the quality of the data they are trained on has a major impact on their objectivity.  This raises ethical concerns, including concerns of algorithmic bias.
+
+## Objectives
+
+You will be able to:
+
+* Define algorithmic bias
+* Describe how the quality of training data impacts the quality of machine learning models
+* Describe the ethical considerations surrounding data quality
+
+## GIGO: Garbage In, Garbage Out
+
+The phrase "garbage in, garbage out" (GIGO) [has been attributed](https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out) to various computer scientists of the 20th century, and the underlying concept dates back to Charles Babbage (1791-1871), the ["father of computing"](https://cse.umn.edu/cbi/who-was-charles-babbage).
+
+The idea of GIGO seems fairly obvious and intuitive: if "bad" data is entered into a computational system, then the output is going to be correspondingly "bad". So why does this even need to be stated?
+
+Consider this 1864 quote from Charles Babbage's [_Passages from the Life of a Philosopher_](https://www.gutenberg.org/ebooks/57532):
+
+> On two occasions I have been asked [by members of Parliament],—“Pray, Mr. Babbage, if you put into the machine wrong figures, will the right answers come out?”
+
+The "machine" Babbage described in that quote was "Difference Engine No. 1" -- essentially a mechanical calculator that was a distant ancestor of modern computers:
+
+<img src="https://www.gutenberg.org/files/57532/57532-h/images/i-ii.jpg" width="300px">
+
+<p><small>Image credit&nbsp;<a href="https://www.gutenberg.org/ebooks/57532">Project Gutenberg</a></small></p>
+
+To a modern eye, this machine might not look particularly sophisticated, especially compared to current technology. But to political leaders of the day, this machine seemed borderline magical, to the point that they wondered if they could enter "bad" data into the machine and still get "good" data as a result.
+
+This might seem like a silly 19th Century idea with no relevance to today. But recently more and more arguments have begun to appear stating that ["smart machines will be less biased than humans"](https://www.ge.com/news/reports/will-smart-machines-be-less-biased-than-humans) and ["machines are less biased than people"](https://www.verdict.co.uk/ai-and-bias/). The underlying assumption seems to be that even though machine learning algorithms are presented with the same information that humans are presented with, something about the scale and the quality of the algorithms will allow them to overcome data quality issues.
+
+As a data professional it is important to be aware of some fundamental issues that can be present in data and _cannot_ be overcome simply by using big data and advanced algorithms.
+
 ## Issues with Data Quality
 
 One of the hardest parts about identifying cognitive bias in datasets is that they may not be so apparent. For example, a healthcare dataset may initially appear to be free of bias, as all data is assumed to be ground truth, but even a raw dataset of patient vital signs may be biased for various reasons. 
