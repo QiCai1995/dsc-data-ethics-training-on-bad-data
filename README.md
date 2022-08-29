@@ -76,7 +76,7 @@ Unfortunately if you have detected any substantial issues with feature accuracy 
 
 ***Representative*** datasets are those that represent each group well; it goes beyond balance to ensure each group receives somewhat fair predictions by being large enough in sample size. This can mean across gender, race, age, and other sensitive features. Representation has a major impact on how well a model performs, but is easily overlooked.
 
-A challenge for assessing this aspect of data quality is the lack of consensus on what a "representative" dataset really is. Some say racial breakdowns should follow the demographics of a country where a specific tool will be used. Other advocate reducing the sample size for dominant groups to make better predictions for marginalized groups. There is no cookie cutter ratio for deciding how much data is representative, but best practices include consulting social and behavioral scientists to aid in this decision-making process.
+A challenge for assessing this aspect of data quality is the lack of consensus on what a "representative" dataset really is. Some say racial breakdowns should follow the demographics of a country where a specific tool will be used. Others advocate reducing the sample size for dominant groups to make better predictions for marginalized groups. Still others point out that this might subject minority communities to harms from excessive surveillance. There is no cookie cutter ratio for deciding how much data is representative, but best practices include consulting social and behavioral scientists to aid in this decision-making process.
 
 #### Addressing Unrepresentative Samples
 
@@ -84,26 +84,23 @@ Increasing representation can leverage many tactics. The most straightforward --
 
 Some machine learning teams rely on existing data for training their models and thus have to rely on computational techniques instead. For example, ***resampling*** techniques developed for imbalanced datasets can also be used to try to improve representation. ***Regularization*** techniques have also [been used to address prejudices](https://link.springer.com/chapter/10.1007/978-3-642-33486-3_3).
 
-### Reaffirming Past Prejudices
+### Encoded Past Prejudices
 
-While linear models are popular for various reasons, they also have limitations. Often, we build models as little experiments to study how our predictions work on a new dataset. There are various models that work poorly on certain types of distributions in datasets. For example, a linear model would be a poor choice if a dataset had had two naturally occurring, diverging groups.  
+A major assumption of predictive analytics is the assumption that the future will -- and should -- resemble the past. Thus even if you have a dataset with accurate features and a representative sample of records, your resulting model can promote algorithmic bias if it perpetuates the ***biased decisions made in the past***.
 
-ML models exhibit unfairness quite frequently, but identifying this unfairness isn’t always straightforward. Let's take a dataset with naturally high imbalance like arrest records in policing In various parts of the world some racial groups are survilled and policed more often than others creating datasets that broadly look like some racial groups have higher criminal activity. On the basis of various kinds of crimes, studies have shown that the propensity for crime is pretty even across races, even though that’s not what it looks like in a dataset. 
+For example, imagine there’s a dataset of current employees and a company wants to find similar people and hire them. An intuitive approach might be to feed the model basic attributes from the employee resumes as well as features such as aptitude scores, personality test results, and interests outside of work. As long as they avoid including sensitive features, how could this model be discriminatory?
 
-With a dataset heavily influenced by the patterns repeated by law enforcement, it’s hard to create a fair model as the underlying data itself is not fair. On the surface we should strongly consider if we can make a fair classifier using policing data, 
+It turns out, Amazon attempted to build a model for this exact purpose and ended up dropping the project in 2015 because their model had such high [estimator bias _and_ algorithmic bias](https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G). Because it was trained on a database of overwhelmingly male resumes, the model was downgrading applicants who mentioned women's activities such as "women's chess club". The features and sampling were accurate, but the model learned from the company's history of hiring more men than women that it should follow suit and give higher scores to men's applications.
 
-Many would consider using policing data for machine learning applications is unethical from the start considering how skewed the underlying data is, and the concept misalignment which assumes that simple arrest records mean someone has commit a crime, and the overall use case that crime is predictable when in fact, predictive policing tools predict policing. If an ML system is tasked with predicting who the police should arrest next, it would suggest they arrest similar people to ones they’ve arrested in the past, regardless of participation in a crime. 
+This kind of replication of past prejudices is also common in criminal justice data. [Predictive policing](https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1740-9713.2016.00960.x) and [criminal sentencing](https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing) are both areas where past racial and class bias has been encoded in the training data, so the resulting models continue that same bias.
 
-When we think about the goals of machine learning, at the core we want to discriminate or classify groups based on previously identified patterns. This intentional grouping or separating of groups can be enacted in ways that 
+#### Addressing Encoded Past Prejudices
 
-For example, if there’s a dataset of employees and a company wants to find similar employees, we make various assumptions about what a model trained on this data can do. 
+Consulting with subject-matter experts is key for understanding the different kinds of biases that are likely to materialize in different datasets. Even if you don't have direct contact with an expert, searching online should help you to uncover relevant historical context.
 
-First, we assume that the employees hired are successful in their roles. While one can assume that since they have not been terminated from their positions they must be successful. This may be true, but inevitably doesn’t capture employees that are not meeting expectations. One work-around to this assumption that some orgs do is have managers highlight star employees and those meeting expectations. However, this again skews training data towards those well liked by their managers. This process doesn’t scale and is likely to encode subjective human biases, as managers alone can determine who is a good employee.
+A recent, exciting computational approach to handling this issue is building an [adversarial model](https://towardsdatascience.com/reducing-bias-from-models-built-on-the-adult-dataset-using-adversarial-debiasing-330f2ef3a3b4) alongside your main model. The adversarial model tries to predict the value of a sensitive feature purely based on the predictions of the main model. Then the main model is iterated on in order to reduce the performance of the adversarial model. This allows for detection as well as mitigation of certain biases, although you need some subject-matter knowledge to determine which sensitive feature(s) to use.
 
-Second, we assume we want to hire employees who are similar to our newly categorized 
-Successful employees. While looking for characteristics such as honesty or adaptability may not encapsulate human bias, seeking to find candidates with similar aptitude scores, personality types, or interests is likely to pose ethical issues. For a company to meet its goals, it's unclear that hiring candidates similar to their existing employees will achieve or advantage their effort. .
-
-## External Reading
+## Additional Resources
 
 * A [short video](https://youtu.be/TWWsW1w-BVo) on the Gender Shades project that identified differing error rates based on gender and race
 * [An Introduction to Sampling Bias](https://www.scribbr.com/methodology/sampling-bias/)
@@ -111,3 +108,7 @@ Successful employees. While looking for characteristics such as honesty or adapt
 * [Datasets Have Worldviews](https://pair.withgoogle.com/explorables/dataset-worldviews/)
 * [The Social Cost of Strategic Classification](https://arxiv.org/abs/1808.08460)
 * [The Quest for Ethical Artificial Intelligence](https://www.youtube.com/watch?v=b_--xrN3eso)
+
+## Summary
+
+"Garbage in, garbage out" is a seemingly-obvious idea, but there tends to be a persistent belief that computational systems will be able to overcome this problem. As you develop machine learning solutions you need to ensure that you are not perpetuating algorithmic bias by feeding "garbage" into your models. The main data quality issues to be aware of are inaccurate features, unrepresentative samples, and past prejudices. In some cases there are computational techniques to improve the data quality but in other cases the only solution is collecting new, better data.
