@@ -60,23 +60,29 @@ First, while [efforts are being made](https://bmjopen.bmj.com/content/3/5/e00240
 
 A more insidious source of quality issues is the ***bias of the people who entered the data***. For example, [studies have demonstrated](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4843483/) that many non-Black medical professionals believe that Black patients feel less pain than others, and they therefore under-rate Black patient pain in records. This has led to widespread under-treatment for this pain in a clinical setting, and any data analysis of pain ratings is likely to be contaminated by this bias.
 
-Finally, even if a model is based on raw patient data directly from some kind of sensor device, there may be ***bias built into the measurement device itself***. For example, medical devices designed for an "average" person might not work correctly for [obese patients](https://www.nytimes.com/2016/09/26/health/obese-patients-health-care.html) or [patients with darker skin tones](https://annalsofintensivecare.springeropen.com/articles/10.1186/s13613-021-00974-7).
+Finally, even if a model is based on raw patient data directly from some kind of sensor device, there may be ***bias built into the measurement device itself***. For example, medical devices designed for an "average" person might not work correctly for [obese patients](https://www.nytimes.com/2016/09/26/health/obese-patients-health-care.html) or [patients with darker skin tones](https://annalsofintensivecare.springeropen.com/articles/10.1186/s13613-021-00974-7). This could cause data to be skewed or even cut off at a certain value.
+
+#### Addressing Inaccurate Features
+
+Unfortunately if you have detected any substantial issues with feature accuracy in your dataset then there is not much that can be done from a machine learning perspective. You might be able to work with a subject-matter expert to adjust the values of features in certain narrow circumstances, but typically you simply won't be able to build a useful model from this kind of data.
 
 ### Unrepresentative Samples
 
-One of the main issues slowing the development of ML with responsible practices is how difficult it is to change biased data. Often, data is collected in ways that leave out various groups intentionally or unintentionally. 
+<img src="https://images.prismic.io/sketchplanations/f2fdb7cb-f126-4897-ad78-4fd11c743172_SP+723+-+Sampling+bias.png" width="500px">
 
-Sampling bias is one of the most common factors that leads to algorithmic bias. As supervised learning relies heavily on “ground truth” training data, models are skewed when the data they’re trained on are insufficiently representative. 
+<p><small>Image credit&nbsp;<a href="https://sketchplanations.com/sampling-bias">Sketchplanations</a></small></p>
 
-Representative datasets are those that represent each group well, it goes beyond balance to ensure each group receives somewhat fair predictions by being large enough in sample size. This can mean across gender, race, age, and other sensitive features. Technically, we can use strategies like stratified random sampling to build in goals for representation. For example, if a housing dataset only includes 2% of home buyers who are Native American, whatever model built using that data will predict poorly for Native American subjects. Representation has a major impact on how well a model performs, but is often overlooked by Data Science teams due to the work necessary to make datasets more representative.
+***Sampling bias*** is another common factor that leads to algorithmic bias. Often, data is collected in ways that leave out various groups intentionally or unintentionally. As supervised learning relies heavily on "ground truth" training data, models become skewed when the data they’re trained on are insufficiently representative.
 
-Increasing representation can leverage many tactics. The first is additional data collection. Sometimes teams rely on existing data to create ML models rather than curating datasets meant for training ML. This can lead to hesitancy around additional data collection which includes updating and notifying users about privacy/data collection changes, restricting who to collect additional data from, and ______. 
+***Representative*** datasets are those that represent each group well; it goes beyond balance to ensure each group receives somewhat fair predictions by being large enough in sample size. This can mean across gender, race, age, and other sensitive features. Representation has a major impact on how well a model performs, but is easily overlooked.
 
-When faced with an imbalanced dataset, practitioners can also resample existing data with fairness constraints. Going back to our housing example, we can set parameters 
+A challenge for assessing this aspect of data quality is the lack of consensus on what a "representative" dataset really is. Some say racial breakdowns should follow the demographics of a country where a specific tool will be used. Other advocate reducing the sample size for dominant groups to make better predictions for marginalized groups. There is no cookie cutter ratio for deciding how much data is representative, but best practices include consulting social and behavioral scientists to aid in this decision-making process.
 
-Data can be manipulated to prioritize fairness at all steps of the development process. Preprocessing methods often look like data transformations, relabeling, reweighting and resampling. In-process methods require teams to constrain ML models during the training process, developing regularizers to remove prejudice, and using adversarial learning to identify biases. Lastly, post-processing methods include making black-box model predictions fair after a model has been built. 
+#### Addressing Unrepresentative Samples
 
-The difficult part about making data representative is knowing how representative they should be. Some say racial breakdowns should follow the demographics of a country where a specific tool will be used. Other advocate underrepresenting dominant groups to make better predictions for marginalized groups. There is no cookie cutter ratio for deciding how much data is representative, but best practices include consulting social and behavioral scientists to aid in this decision making process. 
+Increasing representation can leverage many tactics. The most straightforward -- but also most expensive -- is to ***collect additional data*** in a way that intentionally gathers a representative sample. The field of market research has [good resources](https://www.qualtrics.com/experience-management/research/representative-samples/) on sampling strategies that help to produce a more representative sample.
+
+Some machine learning teams rely on existing data for training their models and thus have to rely on computational techniques instead. For example, ***resampling*** techniques developed for imbalanced datasets can also be used to try to improve representation. ***Regularization*** techniques have also [been used to address prejudices](https://link.springer.com/chapter/10.1007/978-3-642-33486-3_3).
 
 ### Reaffirming Past Prejudices
 
