@@ -42,7 +42,7 @@ By contrast [***algorithmic bias***](https://en.wikipedia.org/wiki/Algorithmic_b
 
 Estimator bias and algorithmic bias may or may not overlap. On the one hand, discriminatory models can be a major cause of estimator bias. A [2019 study](http://proceedings.mlr.press/v81/buolamwini18a/buolamwini18a.pdf) found that even though images of darker-skinned females made up about 1/5 of the dataset, they constituted about 2/3 of the classification error in commercial computer vision models. On the other hand, the program at St. George's matched outcomes from human assessors 90-95% of the time, meaning that the program "correctly" rejected applicants on the basis of gender and nationality. Thus building a model with strong performance is not enough to ensure that you aren't perpetuating algorithmic bias.
 
-One of the best ways to avoid algorithmic bias is by ensuring that models are trained with high-quality data, following the "garbage in, garbage out" philosophy.
+One of the best ways to avoid algorithmic bias is by ensuring that models are trained with high-quality data, following the logic of "garbage in, garbage out".
 
 ## Issues with Data Quality
 
@@ -54,13 +54,13 @@ Below we discuss all three of these types of issues.
 
 ### Inaccurate Features
 
-One of the hardest parts about identifying cognitive bias in datasets is that they may not be so apparent. For example, a healthcare dataset may initially appear to be free of bias, as all data is assumed to be ground truth, but even a raw dataset of patient vital signs may be biased for various reasons. 
+Data professionals might assume that healthcare datasets are unlikely to have inaccurate features, since many of the factors being recorded are "objective" and medical mistakes can cause very high-stakes problems. However we actually find that these datasets frequently contain bad data that can lead to algorithmic bias.
 
-Let’s take into account how medical sensor devices like blood oximeters, which measure the amount of oxygen in the blood, work poorly for patients with dark skin tones. If we use the Fitzpatrick skin type we’d be talking about patients in groups V and VI. 
+First, while [efforts are being made](https://bmjopen.bmj.com/content/3/5/e002406) to improve data entry processes, ***data entry errors*** are common in healthcare datasets, "with some cancer databases recording error rates as high as almost 27%." Any time that a person is responsible for entering data into a computer system, there is a possibility for this type of data inaccuracy simply by mistake.
 
-In addition, human biases always come into play when data is collected about people. In medicine, studies have shown that systemically, medical providers don’t take the complaints about pain as seriously from Black patients as they do those of other races. One reason is that mostly non-black medical communities have long held beliefs about Black patients feeling less pain than others. While this belief his held amongst many in the medical community, it impacts the data collected about patients. Medical providers often ask patients to rate their pain and the actual data patients give may not match what is recorded by biased medical professionals.
- 
-When considering datasets to be good sources of information to build models, we must consider that no matter how much data we have, we rarely have multiple data points for the same person, in other words, we never get the full picture. We have just a snapshot of information about a single patient, without the context of if their vitals were in or outside of normal for that patient. We make major assumptions that the dataset as a whole represents the norm for each patient.
+A more insidious source of quality issues is the ***bias of the people who entered the data***. For example, [studies have demonstrated](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4843483/) that many non-Black medical professionals believe that Black patients feel less pain than others, and they therefore under-rate Black patient pain in records. This has led to widespread under-treatment for this pain in a clinical setting, and any data analysis of pain ratings is likely to be contaminated by this bias.
+
+Finally, even if a model is based on raw patient data directly from some kind of sensor device, there may be ***bias built into the measurement device itself***. For example, medical devices designed for an "average" person might not work correctly for [obese patients](https://www.nytimes.com/2016/09/26/health/obese-patients-health-care.html) or [patients with darker skin tones](https://annalsofintensivecare.springeropen.com/articles/10.1186/s13613-021-00974-7).
 
 ### Unrepresentative Samples
 
