@@ -30,11 +30,29 @@ The "machine" Babbage described in that quote was "Difference Engine No. 1" -- e
 
 To a modern eye, this machine might not look particularly sophisticated, especially compared to current technology. But to political leaders of the day, this machine seemed borderline magical, to the point that they wondered if they could enter "bad" data into the machine and still get "good" data as a result.
 
-This might seem like a silly 19th Century idea with no relevance to today. But recently more and more arguments have begun to appear stating that ["smart machines will be less biased than humans"](https://www.ge.com/news/reports/will-smart-machines-be-less-biased-than-humans) and ["machines are less biased than people"](https://www.verdict.co.uk/ai-and-bias/). The underlying assumption seems to be that even though machine learning algorithms are presented with the same information that humans are presented with, something about the scale and the quality of the algorithms will allow them to overcome data quality issues.
+This might seem like a silly 19th Century idea with no relevance to today. But recently more and more arguments have begun to appear stating that ["smart machines will be less biased than humans"](https://www.ge.com/news/reports/will-smart-machines-be-less-biased-than-humans) and ["machines are less biased than people"](https://www.verdict.co.uk/ai-and-bias/). The underlying assumption seems to be that even though machine learning algorithms are presented with the same information that humans are presented with, something about the scale and the quality of the algorithms will allow them to overcome data quality issues. The machines have changed, but the suggestion that we can get "right answers" despite garbage input has persisted.
 
 As a data professional it is important to be aware of some fundamental issues that can be present in data and _cannot_ be overcome simply by using big data and advanced algorithms.
 
+## Algorithmic Bias
+
+Most of the time in the context of machine learning, [_bias_](https://en.wikipedia.org/wiki/Bias_of_an_estimator) refers to the difference between the predicted target values and their true values. The bias-variance tradeoff involves getting the lowest possible bias while also ensuring that the model's performance is generalizable to unseen data. We might also call this type of bias "estimator bias".
+
+By contrast [***algorithmic bias***](https://en.wikipedia.org/wiki/Algorithmic_bias) refers to unfair, discriminatory outcomes resulting from algorithmic decisions. Originally these biased algorithms were primarily programmed by hand, such as the [system](https://spectrum.ieee.org/untold-history-of-ai-the-birth-of-machine-bias) used at St. George's Hospital Medical School in the early 1980s that docked applicants 3 points for being female and 15 points for being non-European. Nowadays these decisions are more likely to be made by a machine learning model, where the programmer is simply applying an algorithm to a dataset and not making individual decisions about how the features should be weighted.
+
+Estimator bias and algorithmic bias may or may not overlap. On the one hand, discriminatory models can be a major cause of estimator bias. A [2019 study](http://proceedings.mlr.press/v81/buolamwini18a/buolamwini18a.pdf) found that even though images of darker-skinned females made up about 1/5 of the dataset, they constituted about 2/3 of the classification error in commercial computer vision models. On the other hand, the program at St. George's matched outcomes from human assessors 90-95% of the time, meaning that the program "correctly" rejected applicants on the basis of gender and nationality. Thus building a model with strong performance is not enough to ensure that you aren't perpetuating algorithmic bias.
+
+One of the best ways to avoid algorithmic bias is by ensuring that models are trained with high-quality data, following the "garbage in, garbage out" philosophy.
+
 ## Issues with Data Quality
+
+Machine learning models tend to be trained on a set of features (columns) with multiple labeled samples (rows). Quality issues can emerge with either or both of these aspects of the data; inaccurate feature values can cause the model to learn relationships that don't reflect reality, and poor sampling can lead the model to learn relationships that don't generalize.
+
+Even for datasets with accurate features and high-quality sampling, ethical issues may arise because of the past human decisions that went into creating the data in the first place.
+
+Below we discuss all three of these types of issues.
+
+### Inaccurate Features
 
 One of the hardest parts about identifying cognitive bias in datasets is that they may not be so apparent. For example, a healthcare dataset may initially appear to be free of bias, as all data is assumed to be ground truth, but even a raw dataset of patient vital signs may be biased for various reasons. 
 
@@ -44,9 +62,7 @@ In addition, human biases always come into play when data is collected about peo
  
 When considering datasets to be good sources of information to build models, we must consider that no matter how much data we have, we rarely have multiple data points for the same person, in other words, we never get the full picture. We have just a snapshot of information about a single patient, without the context of if their vitals were in or outside of normal for that patient. We make major assumptions that the dataset as a whole represents the norm for each patient.
 
-We must also consider the details around how this data is collected. Were patients notified (or did they have the chance to opt out) of having their data collected by their medical institution? Which institution collected the data and how? Was it the hospital system itself, a university- affiliated hospital, or another group. Is the group private or public? These factors are rarely considered by the time data gets to Data Analysts and Scientists, but may cause systemic inequalities downstream. 
-
-## The Problems with Sampling
+### Unrepresentative Samples
 
 One of the main issues slowing the development of ML with responsible practices is how difficult it is to change biased data. Often, data is collected in ways that leave out various groups intentionally or unintentionally. 
 
@@ -62,7 +78,7 @@ Data can be manipulated to prioritize fairness at all steps of the development p
 
 The difficult part about making data representative is knowing how representative they should be. Some say racial breakdowns should follow the demographics of a country where a specific tool will be used. Other advocate underrepresenting dominant groups to make better predictions for marginalized groups. There is no cookie cutter ratio for deciding how much data is representative, but best practices include consulting social and behavioral scientists to aid in this decision making process. 
 
-## When Some Models Can't Be Fair
+### Reaffirming Past Prejudices
 
 While linear models are popular for various reasons, they also have limitations. Often, we build models as little experiments to study how our predictions work on a new dataset. There are various models that work poorly on certain types of distributions in datasets. For example, a linear model would be a poor choice if a dataset had had two naturally occurring, diverging groups.  
 
@@ -74,17 +90,6 @@ Many would consider using policing data for machine learning applications is une
 
 When we think about the goals of machine learning, at the core we want to discriminate or classify groups based on previously identified patterns. This intentional grouping or separating of groups can be enacted in ways that 
 
-## The Problems with Supervised Learning
-
-Supervised learning has risen to popularity due to its seemingly high accuracy when compared to expert or rules-based systems. However, supervised learning has had shortcomings when exposed to data that isn’t very similar to its training data. 
-
-Supervised learning makes more assumptions than many data science teams don’t initially realize. For example, since at its core supervised learning is pattern matching, we must recognize the hard truths behind supervised learning. 
-
-It’s relatively easy to create a supervised learning model that works well, when our definition of working well involves accurate predictions. However, as an industry, it’s easier to over-index on accuracy asw a success metric. 
-
-Instead, we shouldn’t just aim to create accurate models, models should be developed for 
-Accomplishing specific tasks and maximizing both fairness and accuracy. This is a very active research space as the tradeoff between accuracy and model fairness is highly contested. One of the reasons this is a problem in data science is the data models are trained on. 
-
 For example, if there’s a dataset of employees and a company wants to find similar employees, we make various assumptions about what a model trained on this data can do. 
 
 First, we assume that the employees hired are successful in their roles. While one can assume that since they have not been terminated from their positions they must be successful. This may be true, but inevitably doesn’t capture employees that are not meeting expectations. One work-around to this assumption that some orgs do is have managers highlight star employees and those meeting expectations. However, this again skews training data towards those well liked by their managers. This process doesn’t scale and is likely to encode subjective human biases, as managers alone can determine who is a good employee.
@@ -92,10 +97,9 @@ First, we assume that the employees hired are successful in their roles. While o
 Second, we assume we want to hire employees who are similar to our newly categorized 
 Successful employees. While looking for characteristics such as honesty or adaptability may not encapsulate human bias, seeking to find candidates with similar aptitude scores, personality types, or interests is likely to pose ethical issues. For a company to meet its goals, it's unclear that hiring candidates similar to their existing employees will achieve or advantage their effort. .
 
-Many scenarios in which engineering teams use supervised learning are not appropriate for
-
 ## External Reading
 
+* A [short video](https://youtu.be/TWWsW1w-BVo) on the Gender Shades project that identified differing error rates based on gender and race
 * [An Introduction to Sampling Bias](https://www.scribbr.com/methodology/sampling-bias/)
 * [The Impact of Data Preparation on the Fairness of Software Systems](https://arxiv.org/pdf/1910.02321.pdf)
 * [Datasets Have Worldviews](https://pair.withgoogle.com/explorables/dataset-worldviews/)
